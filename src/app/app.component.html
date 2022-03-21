@@ -1,0 +1,40 @@
+ <h1>Customers</h1>
+
+
+ <button (click)="search(2,true)" class="btn btn-primary btn-block btn-lg">search</button>
+ <button (click)="search(null,true)" class="btn btn-primary btn-block btn-lg">Valid</button>
+ <button (click)="search(null,false)" class="btn btn-primary btn-block btn-lg">inValid</button>
+ 
+<table >
+ 
+   
+    <tr>
+      <td></td>
+      <td> ID </td>
+      <td></td>
+      <td> name </td>
+      <td></td>
+      <td> phone </td>
+      <td></td>
+      <td> country </td>
+      <td></td>
+      <td></td>
+      <td> status </td>
+      <td></td>
+    </tr>
+    <tr *ngFor="let item of data">
+       <td></td>
+      <td> {{item['customer']['id']}} </td>
+      <td></td>
+      <td> {{item['customer']['name']}} </td>
+      <td></td>
+      <td> {{item['customer']['phone']}} </td>
+      <td></td>
+      <td>  {{item['country']['name']}} </td>
+      <td></td>
+      <td></td>
+      <td> {{item['valid']}} </td> 
+    </tr>
+
+  </table> 
+
