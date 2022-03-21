@@ -1,9 +1,28 @@
  <h1>Customers</h1>
+ <div class="container">        
+  <form [formGroup]="form" (ngSubmit)="submit()">  
+           
+      <div class="form-group">  
+          <label for="country">country:</label>  
+          <select formControlName="country" class="form-control">  
+              <option disabled>Select country</option>  
+              <option *ngFor="let web of options" value= {{web.id}} >{{web.display}}</option>  
+          </select>  
+           
+      </div>  
+      <div class="form-group">  
+        <label for="status">status:</label>  
+        <select formControlName="status" class="form-control">  
+            <option disabled>Select status</option>  
+            <option *ngFor="let state of status" value= {{state.id}} >{{state.display}}</option>  
+        </select>  
+         
+    </div>
+      <button class="btn btn-primary" type="submit">Submit</button>  
+  </form>  
+</div>  
 
 
- <button (click)="search(2,true)" class="btn btn-primary btn-block btn-lg">search</button>
- <button (click)="search(null,true)" class="btn btn-primary btn-block btn-lg">Valid</button>
- <button (click)="search(null,false)" class="btn btn-primary btn-block btn-lg">inValid</button>
  
 <table >
  

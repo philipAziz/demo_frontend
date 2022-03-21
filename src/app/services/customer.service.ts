@@ -21,7 +21,7 @@
             let url="http://localhost:8080/Customers?countryId="+id+"&valid="+valid;
             return this.http.get(url);
         }
-       else if(id==null)
+       else if(id==null && valid !=null)
         {
             let url="http://localhost:8080/Customers?valid="+valid;
             return this.http.get(url);

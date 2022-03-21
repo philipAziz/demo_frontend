@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, NgModel } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
 
 import{CustomerService} from './services/customer.service'
 
@@ -29,14 +29,21 @@ export class AppComponent {
     title = 'Customers';
     data:any;
     selected = null;
+    options:any = [
+      { id: 1, display: "Cameroon" },
+      { id: 2, display: "Ethiopia" }, 
+      { id: 3, display: "Morocco" }, 
+      { id: 4, display: "Mozambique" }, 
+      { id: 5, display: "Uganda" }, 
+      { id:null, display: "all" }, 
+      ];
 
-    current:any = { id: 1, display: "Primary" } ;
-    options = [
-      { id: 1, display: "Primary" },
-      { id: 2, display: "Something Else" }, 
-      { id: 3, display: "Yet Another Option" }  ];
-  Id = 1;
-  
+      status:any = [
+        { id: "true", display: "valid" },
+        { id: "false", display: "invalid" },
+         { id:null, display: "all" }, 
+      
+        ];
 
   constructor(private customer:CustomerService){
   
@@ -54,6 +61,23 @@ export class AppComponent {
    
   }
 
+  
+  form = new FormGroup({  
+    status: new FormControl('', Validators.required)  ,
+    country: new FormControl('', Validators.required)  
+  });  
+    
+  get f(){  
+    return this.form.controls;  
+  }  
+    
+  submit(){ 
+    console.log(this.form.value.status);  
+    this.search (this.form.value.country,this.form.value.status);
+  } 
+
+
+
   search (ngDropdown:any,valid:any){
     console.log(this.selected)
     this.customer.getfilter(ngDropdown, valid).subscribe((data: any) =>{
@@ -66,9 +90,7 @@ export class AppComponent {
 
 }
 
-onChange(event: any) {
-  console.log(event); 
- }
+
 
 
 }
