@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
 
-import{CustomerService} from './services/customer.service'
+import{CustomerService} from './services/vacation.service'
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
-export class customers {
-  name: string ="";
-  phone: string="";
-  id: number=0;
-  state: string="";
-  country:country=new country;
-}
 export class country {
   id: number=0;
   code: string="";
@@ -19,79 +13,54 @@ export class country {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  
-
-
-    title = 'Customers';
+    title = 'HR System';
     data:any;
-    selected = null;
-    options:any = [
-      { id: 1, display: "Cameroon" },
-      { id: 2, display: "Ethiopia" }, 
-      { id: 3, display: "Morocco" }, 
-      { id: 4, display: "Mozambique" }, 
-      { id: 5, display: "Uganda" }, 
-      { id:null, display: "all" }, 
+    days : string = '8'
+    types:any = [
+      { id: 1, display: "annual" },
+      { id: 2, display: "sick" }
       ];
-
-      status:any = [
-        { id: "true", display: "valid" },
-        { id: "false", display: "invalid" },
-         { id:null, display: "all" }, 
-      
-        ];
-
+selectedType = this.types[0];
+currentDate = new Date();
+form = new FormGroup({
+  type : new FormControl(''),
+  startDate : new FormControl(''),
+  endDate : new FormControl(''),
+  days : new FormControl(''),
+})
+tableData :any = {
+  annual : '6',
+  sick : '4'
+};
   constructor(private customer:CustomerService){
-  
+ 
   }
+  
   ngOnInit() {
-   
-    this.customer.getData().subscribe((data: any) =>{
-      console.warn(data);
-      
-      this.data=data;
-      
-    })
-
-   
-   
+ 
   }
 
-  
-  form = new FormGroup({  
-    status: new FormControl('', Validators.required)  ,
-    country: new FormControl('', Validators.required)  
-  });  
+submit(){
+  console.log( this.form.value);
+
+  this.customer.addVacation(this.form.value).subscribe((data: any) =>{
     
-  get f(){  
-    return this.form.controls;  
-  }  
+    this.form.controls['days'].setValue(data['vacation']['amount']);
+    this.tableData.annual=data['employee']['annualBalance'];
+    this.tableData.sick=data['employee']['sickBalance'];
+    this.data=data;
+    console.log(this.data,">>>>>>data")
     
-  submit(){ 
-    console.log(this.form.value.status);  
-    this.search (this.form.value.country,this.form.value.status);
-  } 
-
-
-
-  search (ngDropdown:any,valid:any){
-    console.log(this.selected)
-    this.customer.getfilter(ngDropdown, valid).subscribe((data: any) =>{
-      console.warn(data);
-      
-      this.data=data;
-      
-    })
-
-
+  })
 }
-
-
-
-
+convertdate(str: string) {
+  var date = new Date(str),
+    mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+    day = ('0' + date.getDate()).slice(-2);
+  return [day, mnth, date.getFullYear()].join('/');
+}
 }
 

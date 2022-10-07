@@ -1,59 +1,73 @@
- <h1>Customers</h1>
- <div class="container">        
-  <form [formGroup]="form" (ngSubmit)="submit()">  
-           
-      <div class="form-group">  
-          <label for="country">country:</label>  
-          <select formControlName="country" class="form-control">  
-              <option disabled>Select country</option>  
-              <option *ngFor="let web of options" value= {{web.id}} >{{web.display}}</option>  
-          </select>  
-           
-      </div>  
-      <div class="form-group">  
-        <label for="status">status:</label>  
-        <select formControlName="status" class="form-control">  
-            <option disabled>Select status</option>  
-            <option *ngFor="let state of status" value= {{state.id}} >{{state.display}}</option>  
-        </select>  
-         
+<form class="hr" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="field">
+    <p class="title">Select Vacation Type</p>
+    <div class="input-wrapper">
+      <mat-form-field class="input">
+        <label class="label">Type</label>
+        <mat-select [(ngModel)]="selectedType" formControlName="type">
+          <mat-option *ngFor="let type of types" [value]="type.id">{{
+            type.display
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-      <button class="btn btn-primary" type="submit">Submit</button>  
-  </form>  
-</div>  
-
-
- 
-<table >
- 
-   
-    <tr>
-      <td></td>
-      <td> ID </td>
-      <td></td>
-      <td> name </td>
-      <td></td>
-      <td> phone </td>
-      <td></td>
-      <td> country </td>
-      <td></td>
-      <td></td>
-      <td> status </td>
-      <td></td>
-    </tr>
-    <tr *ngFor="let item of data">
-       <td></td>
-      <td> {{item['customer']['id']}} </td>
-      <td></td>
-      <td> {{item['customer']['name']}} </td>
-      <td></td>
-      <td> {{item['customer']['phone']}} </td>
-      <td></td>
-      <td>  {{item['country']['name']}} </td>
-      <td></td>
-      <td></td>
-      <td> {{item['valid']}} </td> 
-    </tr>
-
-  </table> 
-
+  </div>
+  <div class="field">
+    <p class="title">Create Request Details</p>
+    <div class="input-wrapper">
+      <label>Start date</label>
+      <input
+      formControlName="startDate"
+      matInput
+          [min]="currentDate"
+          [matDatepicker]="picker"
+          formControlName="startDate"
+          [disabled]="true"
+          matInput
+          />
+          <mat-datepicker-toggle
+          matSuffix
+          [for]="picker"
+          [disabled]="false"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+          <label>End date</label>
+        <input
+        matInput
+        [min]="currentDate"
+        [matDatepicker]="pickeer"
+        [disabled]="true"
+      formControlName="endDate"
+        matInput
+        />
+        <mat-datepicker-toggle
+        matSuffix
+        [for]="pickeer"
+        [disabled]="false"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickeer [disabled]="false"></mat-datepicker>
+        <label >Days</label>
+        <input formControlName="days" type="text">
+        <button type="submit">Submit</button>
+    </div>
+  </div>
+  <div class="field">
+    <p class="title">Vacation Balance</p>
+      <div class="input-wrapper">
+        <table [(ngModel)]="tableData">
+          <tr>
+            <th>Type</th>
+            <th>Balance</th>
+          </tr>
+          <tr>
+            <td>Annual</td>
+            <td>Sick</td>
+          </tr>
+          <tr>
+            <td>{{tableData.annual}}</td>
+            <td>{{tableData.sick}}</td>
+          </tr>
+        </table>
+      </div> 
+  </div>
+</form>

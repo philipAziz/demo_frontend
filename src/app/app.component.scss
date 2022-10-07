@@ -1,0 +1,23 @@
+.hr{
+    padding: 1rem;
+    .field{
+        margin-block: 3rem;
+        border: 1px black solid;
+        border-radius: 20px;
+        position: relative;
+        .title{
+            position: absolute;
+            top: -26px;
+            left: 35px;
+        }
+        .input-wrapper{
+            display: flex;
+            padding: 2rem 3rem; 
+        }
+    }
+}
+
+label{
+    padding-inline-end: 10px;
+    align-self: center;
+}
